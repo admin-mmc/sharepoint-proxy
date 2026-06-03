@@ -18,7 +18,9 @@ async function getToken() {
   const result = await cca.acquireTokenByClientCredential({
     scopes: ['https://mmmalufconsultoria.sharepoint.com/.default']
   });
-
+  console.log('Token audience:', result.tokenType);
+  console.log('Scopes:', result.scopes);
+  console.log('Token (primeiros 100 chars):', result.accessToken?.substring(0, 100));
   return result.accessToken;
 }
 
@@ -41,6 +43,8 @@ app.get('/video', async (req, res) => {
     if (!spResp.ok) {
       const errText = await spResp.text();
       console.error('SharePoint error:', spResp.status, errText);
+      console.error('URL chamada:', fileUrl);
+      console.error('Token usado (início):', token?.substring(0, 100));
       return res.status(spResp.status).send(errText);
     }
 
