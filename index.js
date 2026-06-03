@@ -38,6 +38,12 @@ app.get('/video', async (req, res) => {
 
     const spResp = await fetch(fileUrl, { headers });
 
+    if (!spResp.ok) {
+      const errText = await spResp.text();
+      console.error('SharePoint error:', spResp.status, errText);
+      return res.status(spResp.status).send(errText);
+    }
+
     res.set('Content-Type', 'video/mp4');
     res.set('Accept-Ranges', 'bytes');
     res.set('Access-Control-Allow-Origin', '*');
