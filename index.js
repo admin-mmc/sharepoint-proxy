@@ -1,6 +1,6 @@
 import express from 'express';
 import fetch from 'node-fetch';
-import msal from '@azure/msal-node';
+import * as msal from '@azure/msal-node';
 
 const app = express();
 
